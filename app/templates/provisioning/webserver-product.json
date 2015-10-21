@@ -1,0 +1,14 @@
+{
+  "apiResources" : [ ],
+  "approvalType" : "auto",
+  "attributes" : [ ],
+  "description" : "",
+  "displayName" : "webserver-product",
+  "environments" : [ "test", "prod" ],
+  "name" : "webserver-product",
+  "proxies" : [ "oauth2","login-app" ],
+  "quota" : "",
+  "quotaInterval" : "",
+  "quotaTimeUnit" : "",
+  "scopes" : [ ]
+}

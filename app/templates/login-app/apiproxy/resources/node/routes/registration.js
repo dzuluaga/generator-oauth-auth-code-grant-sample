@@ -6,8 +6,6 @@ var config = require('../config/config.js');
 exports.get = function(req, res){
 
 	var basePath = utils.getBasePath(req);
-	console.log('BASEPATH ' + basePath)
-	//basePath = 'test';
 	res.render('registration', {
 		basePath: basePath
 	});
