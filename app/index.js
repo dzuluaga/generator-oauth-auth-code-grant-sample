@@ -70,7 +70,7 @@ module.exports = yeoman.generators.Base.extend({
     }.bind(this));
   },
 
-
+//copy dir structures from template dir.  These all happen async.
   apiProxySetup: function() {
     //copy user-mgmt-v1
     this.bulkDirectory('user-mgmt-v1/apiproxy', 'user-mgmt-v1/apiproxy');
@@ -84,18 +84,11 @@ module.exports = yeoman.generators.Base.extend({
 
     //copy webserver-app
     this.bulkDirectory('webserver-app/apiproxy', 'webserver-app/apiproxy');
-    // this.fs.copyTpl(
-    //   this.templatePath('login-app/apiproxy/resources/node/config/config.js'),
-    //   this.destinationPath('login-app/apiproxy/resources/node/config/config.js'), {
-    //     orgname: this.orgname,
-    //     envname: this.envname
-    //   }
-    // );
 
   },
 
 
-//run last
+//change configurations and deploy everything.  These steps all run in sync.
   install: function(){
 
     // configure login-app and provisioning
@@ -135,7 +128,6 @@ module.exports = yeoman.generators.Base.extend({
     webserverappkey = webserverappkey.replace(/\n$/, "");
     webserverappsecret = webserverappsecret.replace(/\n$/, "");
 
-
     shell.cd('..');
     //configure webserver-app bundle
     shell.sed('-i','WEBSERVERAPPKEY', webserverappkey, 'webserver-app/apiproxy/policies/SetConfigurationVariables.xml');
@@ -155,100 +147,4 @@ module.exports = yeoman.generators.Base.extend({
 
   },
 
-/*
-    apiProxyLoginApp: function() {
-    this.bulkDirectory('login-app/apiproxy/policies', 'login-app/apiproxy/policies');
-    this.bulkDirectory('login-app/apiproxy/proxies', 'login-app/apiproxy/proxies');
-    this.bulkDirectory('login-app/apiproxy/resources', 'login-app/apiproxy/resources');
-    this.bulkDirectory('login-app/apiproxy/targets', 'alogin-app/piproxy/targets');
-    this.copy('login-app/apiproxy/loginapp.xml', 'login-app/apiproxy/loginapp.xml');
-  },
-
-  grunt: function() {
-    this.bulkDirectory('grunt/conf', 'grunt/conf');
-    this.bulkDirectory('grunt/lib', 'grunt/lib');
-    this.bulkDirectory('grunt/tasks', 'grunt/tasks');
-    this.copy('grunt/search-and-replace-files.js', 'grunt/search-and-replace-files.js');
-  },
-
-  node: function() {
-    this.bulkDirectory('node', 'node');
-  },
-  tests: function() {
-    this.copy('tests/forecastweather-grunt-plugin-api.js', 'tests/' + this.apiname + '.js');
-    this.fs.copyTpl(
-      this.templatePath('tests/forecastweather-grunt-plugin-api-test-data.js'),
-      this.destinationPath('tests/' + this.apiname + '-test-data.js'), {
-        orgname: this.orgname,
-        basepath : this.basepath,
-      }
-    );
-    this.fs.copyTpl(
-      this.templatePath('tests/forecastweather-grunt-plugin-api-prod-data.js'),
-      this.destinationPath('tests/' + this.apiname + '-prod-data.js'), {
-        orgname: this.orgname,
-        basepath : this.basepath,
-      }
-    );
-    //this.copy('tests/forecastweather-grunt-plugin-api-test-data.js', 'test/' + this.apiname + '-test-data.js');
-    //this.copy('tests/forecastweather-grunt-plugin-api-prod-data.js', 'test/' + this.apiname + '-prod-data.js');
-  },
-
-  config: function() {
-    this.bulkDirectory('config', 'config');
-  },
-
-  git: function() {
-    this.template('gitignore', '.gitignore');
-  },
-
-  others: function() {
-    this.copy('travis.yml', '.travis.yml');
-    this.copy('Gruntfile.js', 'Gruntfile.js');
-  },
-
-  copyApigeeConfigTemplate: function() {
-    this.fs.copyTpl(
-      this.templatePath('grunt/apigee-config.js'),
-      this.destinationPath('grunt/apigee-config.js'), {
-        apiname: this.apiname,
-        orgname: this.orgname,
-        mgmtapiurl: this.mgmtapiurl,
-        basepath : this.basepath,
-        gitrevision: "<%= grunt.option('gitRevision') %>",
-        apidescriptorfile: "target/apiproxy/<%= apigee_profiles[grunt.option('env')].apiproxy %>.xml"
-      }
-    );
-  },
-
-  copyDefault: function() {
-    this.fs.copyTpl(
-      this.templatePath('apiproxy/proxies/default.xml'),
-      this.destinationPath('apiproxy/proxies/default.xml'), {
-        basepath: this.basepath,
-      }
-    );
-  },
-
-  copyPackage: function() {
-    this.fs.copyTpl(
-      this.templatePath('package.json'),
-      this.destinationPath('package.json'), {
-        apiname: this.apiname,
-      }
-    );
-  },
-
-  copyReadme: function() {
-    this.fs.copyTpl(
-      this.templatePath('README.md'),
-      this.destinationPath('README.md'), {
-        apiname: this.apiname,
-      }
-    );
-  },
-
-  install: function() {
-    this.npmInstall();
-  }*/
 });
