@@ -4,14 +4,47 @@ This is a complete, working example that demonstrates an approach to implementin
 
 > If you are not familiar with OAuth 2.0 and terms like "grant type" and "authorization server", there are many resources available on the web. We recommend you start with the [IETF specification](https://tools.ietf.org/html/draft-ietf-oauth-v2-31). It includes a good, general introduction to the OAuth 2.0 framework and its use cases.
 
+* [Prerequisites](#prerequisites)
+* [tl;dr: Deploy](#deploy)
 * [What you need to know about this example](#needtoknow)
 * [What are the parts of this example?](#parts)
-* [How do I get it?](#howdo)
-* [Prerequisites](#prerequisites)
-* [Required configuration steps](#configuration)
-* [Test the sample](#deploy)
 * [Clean up](#clean)
 * [About login and consent session management](#session)
+* [Further configuration](#conf)
+
+## <a name="prerequisites">Prerequisites
+
+To run this sample, you'll need:
+
+* The username and password that you use to login to `enterprise.apigee.com`.
+
+* The name of the organization in which you have an account. Login to
+  `enterprise.apigee.com` and check account settings.
+
+* node.js and npm [installed](https://nodejs.org/)
+
+* Apigeetool [installed](https://www.npmjs.com/package/apigeetool)
+
+* Yeoman [installed](http://yeoman.io/)
+
+* Install oauth-auth-code-grant-sample generator:
+    `npm install generator-oauth-auth-code-grant-sample -g`
+
+## <a name="deploy">tl;dr: Deploy
+
+1. Call Yeoman:
+    `yo oauth-auth-code-grant-sample`
+
+2. Follow the prompts:
+
+```
+Sample Generator of OAuth Authorization Code Grant Type Proxies.
+? Your user name:
+? Password:
+? Management API URL Endpoint: https://api.enterprise.apigee.com
+? Organization Name:
+? Environment Name:
+```
 
 ## <a name="needtoknow">What you need to know about this example
 
@@ -38,51 +71,6 @@ This example has the following parts:
 * **oauth2** -- An API proxy deployed on Apigee Edge that implements the OAuth 2.0 token endpoints. This is the Apigee Edge authorization server interface. Think of this as a service for requesting and managing OAuth tokens.
 
 >Note that all the parts of this example run on Apigee Edge. For the most part, this is just to simplify things. The login app, for example, could be designed to run on any platform, as long as it can communicate with Apigee Edge (the authorization server). Such details are obviously going to vary depending on the specific bundle.
-
-
-## <a name="howdo"></a>How do I get it?
-
-#### Clone this repository from Git
-```bash
-  $ git clone https://github.com/apigee/api-platform-samples
-```
-
-When you have the samples repository on your system, CD to `./api-platform-samples/sample-proxies/oauth-advanced`. This puts you in the root directory of this example.
-
-## <a name="prerequisites">Prerequisites
-
-To run this sample, you'll need:
-
-* The username and password that you use to login to `enterprise.apigee.com`.
-
-* The name of the organization in which you have an account. Login to
-  `enterprise.apigee.com` and check account settings.
-
-* node.js and npm installed
-
-* Apigeetool [installed](https://www.npmjs.com/package/apigeetool)
-
-* Yeoman [installed](http://yeoman.io/)
-
-## <a name="configuration">Required configuration steps
-
-The following sections step through configuration of each example component.
-
-## Deploy using Yeoman and the oauth-auth-code-grant-sample generator
-
-1. Call Yeoman:
-    `yo oauth-auth-code-grant-sample`
-
-2. Follow the prompts:
-
-```
-Sample Generator of OAuth Authorization Code Grant Type Proxies.
-? Your user name:
-? Password:
-? Management API URL Endpoint: https://api.enterprise.apigee.com
-? Organization Name:
-? Environment Name:
-```
 
 ## <a name="deploy">Test the sample
 
@@ -127,7 +115,7 @@ You can use the cleanup scripts to remove the entities (developers, apps, produc
 
 The login app includes session management to guarantee that only the logged-in user can access the consent page. Once a successful login has occurred, a user attribute is set in the server side session data.  This attribute is checked when clients access the consent page.  A valid logged-in session can only be used one time for consent to an authorization.  The session is destroyed upon a successful consent in which an authorization code is generated for the client application. For more information, see `./login-app/README`.
 
-### Further configuration steps
+### <a name="conf">Further configuration
 
 The following sections describe configuration steps that are separate from deployment.
 

@@ -34,7 +34,6 @@ module.exports = yeoman.generators.Base.extend({
         name: 'password',
         message: 'Password',
         required: true,
-        store   : true,
         default: 'none' // Default to current folder name
       }, {
         type: 'input',
