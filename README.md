@@ -105,26 +105,26 @@ If everything worked successfully, you'll see the access code and some extra inf
 
 ## <a name="clean">Clean up
 
-You can use the cleanup scripts to remove the entities (developers, apps, products) that were installed with this sample.
+You can use the clean up scripts to remove the entities (developers, apps, products) that were installed with this sample.
 
-1. CD to `oauth-advanced/provisioning`
-2. Execute `cleanup-login-app.sh`
-3. Execute `cleanup-webserver-app.sh`
+1. CD to `provisioning`
+2. Execute `./cleanup.sh <OrgName> <Environment> <Username> <Password> <MSURL>`
+
+    For example:
+
+    `./cleanup.sh myorg prod test@example.com apigee123 https://api.enterprise.apigee.com`
 
 ## <a name="session">About login and consent session management
 
 The login app includes session management to guarantee that only the logged-in user can access the consent page. Once a successful login has occurred, a user attribute is set in the server side session data.  This attribute is checked when clients access the consent page.  A valid logged-in session can only be used one time for consent to an authorization.  The session is destroyed upon a successful consent in which an authorization code is generated for the client application. For more information, see `./login-app/README`.
 
-### <a name="conf">Further configuration
+## <a name="conf">Further configuration
 
-The following sections describe configuration steps that are separate from deployment.
+The following sections describe configuration steps that are separate from deployment.  Depending on your setup, you may need to modify these configuration files.
 
-**Configure the bundle:**
-
-1. CD to `oauth-advanced/login-app/apiproxy/resources/node`
-2. Execute `npm install` to install dependencies.
-3. Open `login-app/apiproxy/resources/node/config/config.js`
-4. Enter your environment information. The domain will typically be `apigee.net`. Some on-premise installations of Apigee Edge may use a different domain. For example:
+Configure Loginapp
+1. Open `login-app/apiproxy/resources/node/config/config.js`
+2. Enter your environment information. The domain will typically be `apigee.net`. Some on-premise installations of Apigee Edge may use a different domain. For example:
 
       ```
           exports.envInfo = {
@@ -133,13 +133,10 @@ The following sections describe configuration steps that are separate from deplo
              domain: 'apigee.net'
           };
       ```
+3. Deploy the login-app bundle.
 
-5. Save the file.
-
-
-You must perform this step after you deploy the login-app bundle.
-
-1. CD to `oauth-advanced/provisioning`
+**Provision the webserver-app**
+1. CD to `provisioning`
 2. Open the file `webserver-app.xml` in an editor.
 3. Edit the ```<CallbackUrl>``` element as follows, substituting your Edge organization and environment names:
 
@@ -155,7 +152,7 @@ You must perform this step after you deploy the login-app bundle.
 
 >**Important! Make a note of this exact callback URL. You will need to add it to another configuration file later.**
 
-4. Execute: `./provision-webserver.sh`
+4. Execute: `./provision-webserver.sh username password orgName environment https://your-ms-url.com`
 
 The provisioning script creates the required entities on Apigee Edge and returns two keys: **consumer key** and **consumer secret** in your terminal window. You'll need these values when you configure the webserver app.
 
@@ -216,8 +213,7 @@ For example:
   * `CLIENT_ID` - The "Consumer Key" obtained from a developer app that is registered on Apigee Edge.
       >Note that this key must match the one you configured previously in the webserver app.
 6. Save the file.
-
-
+7. Deploy webserver-app API proxy.
 
 ## Get help
 
