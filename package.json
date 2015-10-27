@@ -1,6 +1,6 @@
 {
   "name": "generator-oauth-auth-code-grant-sample",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "Generator for OAuth authorization code grant type using Apigee",
   "files": [
     "app",
