@@ -4,6 +4,8 @@ This is a complete, working example that demonstrates an approach to implementin
 
 > If you are not familiar with OAuth 2.0 and terms like "grant type" and "authorization server", there are many resources available on the web. We recommend you start with the [IETF specification](https://tools.ietf.org/html/draft-ietf-oauth-v2-31). It includes a good, general introduction to the OAuth 2.0 framework and its use cases.
 
+![alt text](images/oauth-authcode.gif "Animated GIF running through installation.")
+
 * [Prerequisites](#prerequisites)
 * [tl;dr: Deploy](#deploy)
 * [What you need to know about this example](#needtoknow)
